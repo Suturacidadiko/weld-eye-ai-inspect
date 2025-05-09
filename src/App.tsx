@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -30,9 +30,36 @@ const App = () => (
           <Route path="/gallery" element={<AppLayout><Gallery /></AppLayout>} />
           <Route path="/reports" element={<AppLayout><Reports /></AppLayout>} />
           <Route path="/settings" element={<AppLayout><Settings /></AppLayout>} />
-          <Route path="/analysis" element={<AppLayout><Analysis /></AppLayout>} />
-          <Route path="/statistics" element={<AppLayout><React.Suspense fallback={<div>Загрузка...</div>}><Statistics /></React.Suspense></AppLayout>} />
-          <Route path="/database" element={<AppLayout><React.Suspense fallback={<div>Загрузка...</div>}><Database /></React.Suspense></AppLayout>} />
+          <Route 
+            path="/analysis" 
+            element={
+              <AppLayout>
+                <Suspense fallback={<div className="flex items-center justify-center h-screen">Загрузка...</div>}>
+                  <Analysis />
+                </Suspense>
+              </AppLayout>
+            } 
+          />
+          <Route 
+            path="/statistics" 
+            element={
+              <AppLayout>
+                <Suspense fallback={<div className="flex items-center justify-center h-screen">Загрузка...</div>}>
+                  <Statistics />
+                </Suspense>
+              </AppLayout>
+            } 
+          />
+          <Route 
+            path="/database" 
+            element={
+              <AppLayout>
+                <Suspense fallback={<div className="flex items-center justify-center h-screen">Загрузка...</div>}>
+                  <Database />
+                </Suspense>
+              </AppLayout>
+            } 
+          />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
