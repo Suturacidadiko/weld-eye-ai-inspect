@@ -146,7 +146,7 @@ const Index = () => {
                   onClick={startDemonstration}
                 >
                   <Upload className="mr-2 h-4 w-4" />
-                  Запустить демо
+                  Запустить ИИ анализ
                 </Button>
               </>
             ) : (
