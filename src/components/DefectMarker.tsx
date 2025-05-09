@@ -1,12 +1,11 @@
 
 import React from 'react';
-
-type DefectType = 'crack' | 'pore' | 'incomplete';
+import { Defect } from '../types/analysis';
 
 interface DefectMarkerProps {
   x: number;
   y: number;
-  type: DefectType;
+  type: Defect['type'];
   size: number;
   onClick?: () => void;
 }

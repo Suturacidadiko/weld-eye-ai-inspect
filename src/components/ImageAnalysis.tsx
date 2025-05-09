@@ -5,15 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import ScanningAnimation from './ScanningAnimation';
 import DefectMarker from './DefectMarker';
-
-interface Defect {
-  id: string;
-  x: number;
-  y: number;
-  type: 'crack' | 'pore' | 'incomplete';
-  size: number;
-  description: string;
-}
+import { Defect } from '../types/analysis';
 
 interface ImageAnalysisProps {
   imageUrl: string;
@@ -30,19 +22,19 @@ export const ImageAnalysis: React.FC<ImageAnalysisProps> = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   const { toast } = useToast();
 
-  // Simulated analysis process
+  // Имитация процесса анализа
   const startAnalysis = () => {
     setIsScanning(true);
     setDefects([]);
     setSelectedDefect(null);
     
-    // Play scanning sound
+    // Звук сканирования
     const audio = new Audio('/scan-sound.mp3');
     audio.play().catch(() => {
       console.log('Audio play failed. User interaction needed first.');
     });
 
-    // Simulate delayed analysis with staged results
+    // Имитация задержки анализа с поэтапными результатами
     setTimeout(() => {
       const simulatedDefects: Defect[] = [
         {
@@ -51,7 +43,8 @@ export const ImageAnalysis: React.FC<ImageAnalysisProps> = ({
           y: 45,
           type: 'crack',
           size: 1.8,
-          description: 'Продольная трещина сварного шва'
+          description: 'Продольная трещина сварного шва',
+          severity: 'high'
         },
         {
           id: '2',
@@ -59,7 +52,8 @@ export const ImageAnalysis: React.FC<ImageAnalysisProps> = ({
           y: 30,
           type: 'pore',
           size: 0.9,
-          description: 'Газовая пора'
+          description: 'Газовая пора',
+          severity: 'medium'
         },
         {
           id: '3',
@@ -67,14 +61,15 @@ export const ImageAnalysis: React.FC<ImageAnalysisProps> = ({
           y: 60,
           type: 'incomplete',
           size: 2.1,
-          description: 'Непровар кромки соединения'
+          description: 'Непровар кромки соединения',
+          severity: 'high'
         }
       ];
       
       setDefects(simulatedDefects);
       setIsScanning(false);
       
-      // Play alert sound if critical defects found
+      // Звуковое оповещение при обнаружении критических дефектов
       if (simulatedDefects.some(d => d.type === 'crack')) {
         const alertAudio = new Audio('/alert-sound.mp3');
         alertAudio.play().catch(() => {
@@ -82,7 +77,7 @@ export const ImageAnalysis: React.FC<ImageAnalysisProps> = ({
         });
       }
       
-      // Notify about defects found
+      // Уведомление о найденных дефектах
       toast({
         title: "Анализ завершен",
         description: `Обнаружено дефектов: ${simulatedDefects.length}`,
